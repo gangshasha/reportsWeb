@@ -1,0 +1,13 @@
+body{
+    font-family: "Microsoft Yahei";
+}
+.line {
+    text-align: center;
+}
+.group-warp{
+    border: 1px solid #eaeefb;
+    border-radius: 4px;
+    transition: .2s;
+    padding: 20px;
+    display: table;
+}
