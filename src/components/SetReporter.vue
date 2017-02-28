@@ -2,8 +2,7 @@
     <section>
          <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
             <el-form ref="form" :model="form" label-width="120px">
-                {{$route.params.id}}
-                <el-form-item label="报表名称">
+                  <el-form-item label="报表名称">
                     <el-col :span="12">
                         <el-input v-model="form.content.name"></el-input>
                     </el-col>
@@ -81,16 +80,16 @@ import {mInput,mOutput,mContent,mModes} from '../enum.js'
       return {
         form: {
           input: [
-              {display:"性别",name:"sex",mode:"select",tableName:"tb_user"},
-              {display:"姓名",name:"name",mode:"text",tableName:"tb_user"},
-              {display:"出生时间",name:"date",mode:"datetime",tableName:"tb_user"}
+            //   {display:"性别",name:"sex",mode:"select",tableName:"tb_user"},
+            //   {display:"姓名",name:"name",mode:"text",tableName:"tb_user"},
+            //   {display:"出生时间",name:"date",mode:"datetime",tableName:"tb_user"}
           ],
           output:[
-              {display:"姓名",name:"name",tableName:"tb_user"},
-              {display:"性别",name:"sex",tableName:"tb_user"},
-              {display:"家庭地址",name:"address",tableName:"tb_user"},
-              {display:"学校",name:"school",tableName:"tb_user"},
-              {display:"电话",name:"sex",tableName:"tb_user"}
+            //   {display:"姓名",name:"name",tableName:"tb_user"},
+            //   {display:"性别",name:"sex",tableName:"tb_user"},
+            //   {display:"家庭地址",name:"address",tableName:"tb_user"},
+            //   {display:"学校",name:"school",tableName:"tb_user"},
+            //   {display:"电话",name:"sex",tableName:"tb_user"}
           ],
           content:{
               name:""
@@ -99,10 +98,11 @@ import {mInput,mOutput,mContent,mModes} from '../enum.js'
       }
     },
     methods: {
-      async onSubmit() {
-        let res=await api.operateReport(this.$route.params.id,this.form.content.name,this.form);
-        this.$notify.success({
-          title: $route.params.id?'添加':'修改',
+      async onSubmit() {//更新提交
+        let id=!this.$route.params?"":this.$route.params.id;
+        let res=await api.operateReport(id,this.form.content.name,JSON.stringify(this.form));
+         this.$notify.success({
+          title: '添加',
           message: '这是一条成功的提示消息'
         });
       },
@@ -113,6 +113,12 @@ import {mInput,mOutput,mContent,mModes} from '../enum.js'
       delPut(i,row){
         row.splice(i,1)
       }
+    },
+   async mounted(){//自动执行加载
+       let res=await api.getReport(this.$route.params.id);
+        console.log(JSON.parse(res.data.reportMap.REPORT_CONTENT));
+        this.form=JSON.parse(res.data.reportMap.REPORT_CONTENT);
+
     }
   }
 </script>
