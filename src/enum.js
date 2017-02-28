@@ -1,13 +1,14 @@
 import _ from 'lodash'
 export const mModes=["text","select","datetime"];
+export const mSymbols=["=",">","<"]
 
 export function mInput(item){
     return _.assign({
         display:"",
         name:"",
-        mode:"",
+        // mode:"",
         tableName:"",
-        selects:[],
+        symbol:"",
         value:""
     },item);
 };
@@ -25,3 +26,4 @@ export function mContent(){
         name:""
     },item);
 }
+
