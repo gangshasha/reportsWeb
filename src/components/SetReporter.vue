@@ -99,8 +99,10 @@ import {mInput,mOutput,mContent,mModes} from '../enum.js'
     },
     methods: {
       async onSubmit() {//更新提交
+        var that=this;
         let id=!this.$route.params?"":this.$route.params.id;
         let res=await api.operateReport(id,this.form.content.name,JSON.stringify(this.form));
+        that.$router.push({ name: 'ListReporter'});//跳转到报表界面
          this.$notify.success({
           title: '添加',
           message: '这是一条成功的提示消息'
