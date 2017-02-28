@@ -3,7 +3,7 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
             <el-form :inline="true">
                 <el-form-item label="报表名称">
-                    <el-input  placeholder="报表名称"></el-input>
+                    <el-input v-model="searchName" placeholder="报表名称"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getReports();">查询</el-button>
@@ -32,22 +32,20 @@
         data(){
             return {
                 listLoading: false,
-                list:[]
+                list:[],
+                searchName:""
             }
         },
         methods:{
             async deleteReport(index,rows){
                 let that=this;
-                alert(rows[index].REPORT_ID);
                 let res=await api.delReport(rows[index].REPORT_ID);
                 if(res.data.count){
                     rows.splice(index, 1);
-                     alert("xxx1");
-                    that.$notify.success({
+                     that.$notify.success({
                         title: '成功',
                         message: '这是一条成功的提示消息'
                     });
-                    alert("xxx");
                     that.getReports();
                 }else{
                     that.$notify.error({
@@ -57,7 +55,7 @@
                 }
             },
             async getReports(){
-              var res=await api.getReports();
+               let res=await api.getReports(this.searchName);
                this.list=res.data.list;
             }
         },
